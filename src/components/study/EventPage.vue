@@ -1,11 +1,26 @@
 <template>
   <div class="event-page">
     <h2>学習3：イベント</h2>
+    <span>クリックされた回数は{{ count }}です</span>
+    <button id="button" class="btn btn-sm btn-info" @click="onClickButton()">
+      Click Me
+    </button>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      count: 0,
+    };
+  },
+  methods: {
+    onClickButton: function () {
+      this.count++;
+    },
+  },
+};
 </script>
 
 <style scoped>
