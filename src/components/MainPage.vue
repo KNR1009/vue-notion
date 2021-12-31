@@ -6,6 +6,7 @@
         v-for="note in noteList"
         v-bind:key="note.id"
         v-bind:note="note"
+        @delete="onDeleteNote"
       />
       <!-- ノートの追加ボタン -->
       <button class="transparent" @click="onClickButtonAdd">
@@ -31,6 +32,10 @@ export default {
         name: `新規ノート`,
         mouseover: false,
       });
+    },
+    onDeleteNote: function (deleteNote) {
+      const index = this.noteList.indexOf(deleteNote);
+      this.noteList.splice(index, 1);
     },
   },
   components: {

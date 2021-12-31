@@ -19,7 +19,7 @@
       <div class="button-icon">
         <i class="fas fa-edit"></i>
       </div>
-      <div class="button-icon">
+      <div class="button-icon" @click="onClickDelete(note)">
         <i class="fas fa-trash"></i>
       </div>
     </div>
@@ -36,6 +36,9 @@ export default {
     },
     onMouseRemove: function () {
       this.note.mouseover = false;
+    },
+    onClickDelete: function (note) {
+      this.$emit("delete", note);
     },
   },
 };
