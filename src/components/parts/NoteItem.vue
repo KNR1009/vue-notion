@@ -3,26 +3,35 @@
     class="note"
     @mouseover="onMouseOver()"
     @mouseleave="onMouseRemove()"
-    v-bind:class="{ mouseover: note.mouseover }"
+    v-bind:class="{ mouseover: note.mouseover && !note.editing }"
   >
-    <div class="note-icon">
-      <i class="fas fa-file-alt"></i>
-    </div>
-    <div class="note-name">{{ note.name }}</div>
-    <div v-show="note.mouseover" class="buttons">
-      <div class="button-icon">
-        <i class="fas fa-sitemap"></i>
+    <template v-if="note.editing">
+      <input
+        v-model="note.name"
+        class="transparent"
+        @keypress.enter="onEditEnd"
+      />
+    </template>
+    <template v-else>
+      <div class="note-icon">
+        <i class="fas fa-file-alt"></i>
       </div>
-      <div class="button-icon">
-        <i class="fas fa-plus-circle"></i>
+      <div class="note-name">{{ note.name }}</div>
+      <div v-show="note.mouseover" class="buttons">
+        <div class="button-icon">
+          <i class="fas fa-sitemap"></i>
+        </div>
+        <div class="button-icon">
+          <i class="fas fa-plus-circle"></i>
+        </div>
+        <div class="button-icon" @click="onClickEdit(note)">
+          <i class="fas fa-edit"></i>
+        </div>
+        <div class="button-icon" @click="onClickDelete(note)">
+          <i class="fas fa-trash"></i>
+        </div>
       </div>
-      <div class="button-icon">
-        <i class="fas fa-edit"></i>
-      </div>
-      <div class="button-icon" @click="onClickDelete(note)">
-        <i class="fas fa-trash"></i>
-      </div>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -39,6 +48,12 @@ export default {
     },
     onClickDelete: function (note) {
       this.$emit("delete", note);
+    },
+    onClickEdit: function (note) {
+      this.$emit("editStart", note);
+    },
+    onEditEnd: function () {
+      this.$emit("editEnd");
     },
   },
 };
