@@ -9,6 +9,7 @@
         @delete="onDeleteNote"
         @editStart="onEditNoteStart"
         @editEnd="onEditNoteEnd"
+        @AddChild="onAddChildNote"
       />
       <!-- ノートの追加ボタン -->
       <button class="transparent" @click="onClickButtonAdd">
@@ -34,6 +35,7 @@ export default {
         name: `新規ノート`,
         mouseover: false,
         editing: false,
+        children: [],
       });
     },
     onDeleteNote: function (deleteNote) {
@@ -49,6 +51,15 @@ export default {
       for (let note of this.noteList) {
         note.editing = false;
       }
+    },
+    onAddChildNote: function (note) {
+      note.children.push({
+        id: new Date().getTime().toString(16),
+        name: `${note.name}の子ノート`,
+        mouseover: false,
+        editing: false,
+        children: [],
+      });
     },
   },
   components: {
